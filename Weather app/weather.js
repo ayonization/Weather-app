@@ -9,40 +9,33 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const port = 3000;
 
+app.set('view engine', 'ejs');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'views')));
 
 app.get('/', (req, res) => {
-    res.sendFile('index.html');
+    res.sendFile(index);
 });
+
 
 app.post('/result', (req, res) => {
     var searchQuery = req.body.search;
+
+    var address = geocode.geocodeAddress(searchQuery,(error,results)=>{
+        if(error){
+            console.log(error);
+        } else{
+            console.log("The full address is " + results.fulladdress);
+        }
+    });
+
+    console.log(address);
     
-    res.send(`
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <link rel="stylesheet" href="style.css">
-                <title>Weather Report</title>
-            </head>
-            <body>
-                <div class="container">
-                    <div class="header">
-                        <h1>Weather Report</h1>
-                    </div>
-                    <div class="result-area">
-                        <p>${searchQuery}</p>
-                    </div>
-                </div>
-            </body>
-            </html>
-    `);
+    // res.render('result.ejs', {result: address});
     
 });
 
