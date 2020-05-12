@@ -33,7 +33,20 @@ app.post('/result', (req, res) => {
         }
     });
 
+
+
+
+
+    /************************ couldn't get why this outputs undefined check it out once! *************************************/
     console.log(address);
+
+    /*************************************************************************************************************************/
+
+
+
+
+
+    
     
     // res.render('result.ejs', {result: address});
     
