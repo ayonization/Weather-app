@@ -8,14 +8,13 @@ var geocodeAddress=(address,callback)=>{
         url:'https://maps.googleapis.com/maps/api/geocode/json?address='+encodedAddress+'&key=AIzaSyC5NfBu5x0bhS1SBULGWty7W4sCLBR6uLc',
         json:true
     },(error,response,body)=>{  
-    
         if(error)
         {
-            callback("Couldnt connect to googles servers");
+            callback("Couldnt connect to google's servers");
             
         }
         else if(body.status==="ZERO_RESULTS"){
-            callback("Invalid adress");
+            callback("Invalid address");
             
         }
         else{
