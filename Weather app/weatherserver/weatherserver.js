@@ -17,7 +17,12 @@ var getweather=(lat,lng,callback)=>{
         }
         else{
         callback(undefined,{
-            temperature:body.main.temp
+            temperature:body.main.temp,
+            feelslike:body.main.feels_like,
+            humidity:body.main.humidity,
+            windspeed:body.wind.speed,
+            weatheris:body.weather[0].main,
+            weatherdescrip:body.weather[0].description,
         });
         }
     
