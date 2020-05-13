@@ -17,7 +17,7 @@ var getweather=(lat,lng,callback)=>{
         }
         else{
         callback(undefined,{
-            temparature:body.main.temp
+            temperature:body.main.temp
         });
         }
     

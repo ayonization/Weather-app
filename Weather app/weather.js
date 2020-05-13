@@ -25,20 +25,35 @@ app.get('/', (req, res) => {
 app.post('/result', (req, res) => {
     var searchQuery = req.body.search;
 
-    var address = geocode.geocodeAddress(searchQuery,(error,results)=>{
+    geocode.geocodeAddress(searchQuery,(error,results)=>{
         if(error){
             console.log(error);
         } else{
-            console.log("The full address is " + results.fulladdress);
+            // console.log("The full address is " + results.fulladdress);
+            weatherserver.getweather(results.latitude,results.longitude,(errorMessage,weatherResults)=>{
+                if(errorMessage)
+                {
+                    console.log(errorMessage);
+                                
+                }
+                else{
+                    console.log("The full address is " + results.fulladdress);
+                    console.log("The temperature is " + weatherResults.temperature + " degrees celcius");
+                    // console.log(weatherResults);
+
+                    res.render('result.ejs', {result: results.fulladdress, temperature: weatherResults.temperature});
+                }
+            });
+
         }
     });
 
 
 
-
+ 
 
     /************************ couldn't get why this outputs undefined check it out once! *************************************/
-    console.log(address);
+    // console.log(address);
 
     /*************************************************************************************************************************/
 
@@ -80,7 +95,7 @@ app.listen(port, ()=> {console.log(`Server running at ${port}`)});
                 
 //             }
 //             else{
-//                 console.log("The temparature is " + weatherResults.temparature + " degrees celcius");
+//                 console.log("The temperature is " + weatherResults.temperature + " degrees celcius");
 //                 // console.log(weatherResults);
                 
 //             }
