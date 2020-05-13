@@ -37,10 +37,13 @@ app.post('/result', (req, res) => {
                                 
                 }
                 else{
-                    console.log("The full address is " + results.fulladdress);
+                     console.log("The full address is " + results.fulladdress);
                     console.log("The temperature is " + weatherResults.temperature + " degrees celcius");
                     // console.log(weatherResults);
-
+                    console.log("It feels like " + weatherResults.feelslike + " degrees celcius");
+                    console.log("The humidity is " + weatherResults.humidity + " percent");
+                    console.log("The wind speed is " + weatherResults.windspeed + " km/h");
+                    console.log("The weather report is " + weatherResults.weatheris);
                     res.render('result.ejs', {result: results.fulladdress, temperature: weatherResults.temperature});
                 }
             });
