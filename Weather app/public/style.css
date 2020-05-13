@@ -92,3 +92,12 @@ a, p, label, button, td {
         .result-area table tr:nth-child(even){background-color: #f2f2f2;}
 
         .result-area table tr:hover {background-color: #ddd;}
+
+.links a {
+    text-decoration: none;
+    color: black;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
