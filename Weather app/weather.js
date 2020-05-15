@@ -21,9 +21,23 @@ app.get('/', (req, res) => {
     res.sendFile(index);
 });
 
+// function timeConverter(UNIX_timestamp){
+//     var a = new Date(UNIX_timestamp * 1000);
+//     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+//     var year = a.getFullYear();
+//     var month = months[a.getMonth()];
+//     var date = a.getDate();
+//     var hour = a.getHours();
+//     var min = a.getMinutes();
+//     var sec = a.getSeconds();
+//     var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+//     return time;
+//   }
+//   console.log(timeConverter(0));
 
 app.post('/result', (req, res) => {
     var searchQuery = req.body.search;
+
 
     geocode.geocodeAddress(searchQuery,(error,results)=>{
         if(error){
@@ -37,20 +51,22 @@ app.post('/result', (req, res) => {
                                 
                 }
                 else{
-                     console.log("The full address is " + results.fulladdress);
-                    console.log("The temperature is " + weatherResults.temperature + " degrees celcius");
-                    // console.log(weatherResults);
-                    console.log("It feels like " + weatherResults.feelslike + " degree celcius");
-                    console.log("The humidity is " + weatherResults.humidity + " percent");
-                    console.log("The wind speed is " + weatherResults.windspeed + " km/h");
-                    console.log("The weather report is " + weatherResults.weatheris);
-                    res.render('result.ejs', {
-                        result: results.fulladdress, 
-                        temperature: weatherResults.temperature, 
-                        feelslike: weatherResults.feelslike,
-                        humidity: weatherResults.humidity,
-                        report: weatherResults.weatheris
-                    });
+                    var sr = new Date(weatherResults.sunrise).toLocaleTimeString("en-US")
+                    var ss = new Date(weatherResults.sunset).toLocaleTimeString("en-US")
+                    console.log("sunrise is at "+sr);
+                    console.log("sunset is at "+ss);
+                    console.log("current temp  is  "+weatherResults.temp);
+                    console.log("Weather report is  "+weatherResults.weatherdescrip);
+                    console.log("Humidity is "+weatherResults.humidity);
+                    console.log("Tomorrow max temp is "+weatherResults.tomaxtemp);
+                    console.log("Tomorrow min temp is "+weatherResults.tomintemp);
+                    console.log("Tomorrow weather report is "+weatherResults.toweather);
+                    console.log("Day after tomorrow max temp is "+weatherResults.nextmaxtemp);
+                    console.log("Day after tomorrow min temp is "+weatherResults.nextmintemp);
+                    console.log("Day after tomorrow weather report is  "+weatherResults.nextweather);
+
+                    
+                    res.render('result.ejs', {result: results.fulladdress, temperature: weatherResults.temperature});
                 }
             });
 
