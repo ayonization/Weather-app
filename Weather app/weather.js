@@ -31,6 +31,23 @@ function storeSourceImage(weatherID) {
         src = Math.floor(weatherID/100).toString();
 }
 
+function predictForecast(report) {
+    if(report == "Thunderstorm") 
+        return report + "s";
+    else if(report == "Drizzle")
+        return "Drizzly";
+    else if(report == "Rain")
+        return report + "y";
+    else if(report == "Snow")
+        return report + "y";
+    else if(report == "Mist" || report == "Smoke" || report == "Haze" || report == "Dust" || report == "Fog" || report == "Sand" || report == "Ash" || report == "Squall" || report == "Tornado")
+        return "Dusty";
+    else if(report == "Clear")
+        return "Clear Skies";
+    else if(report == "Clouds")
+        return "Cloudy";
+}
+
 app.post('/result', (req, res) => {
     var searchQuery = req.body.search;
 
@@ -47,9 +64,6 @@ app.post('/result', (req, res) => {
                                 
                 }
                 else{
-                    console.log();
-                    console.log();
-
                     /////////// The Date logic to send interactive lines to the user //////////////////
                     var sr = new Date(weatherResults.sunrise*1000);
                     var ss = new Date(weatherResults.sunset*1000);
@@ -76,14 +90,14 @@ app.post('/result', (req, res) => {
                         address: results.fulladdress,
                         temperature: weatherResults.temp,
                         humidity: weatherResults.humidity,
-                        todayReport: weatherResults.weatherdescrip, 
+                        todayReport: predictForecast(weatherResults.weatherdescrip), 
                         tomMinTemp: weatherResults.tomintemp, 
                         tomMaxTemp: weatherResults.tomaxtemp, 
-                        tomReport: weatherResults.toweather,
+                        tomReport: predictForecast(weatherResults.toweather),
                         dayAfter: dayAfter, 
                         dayAfterMinTemp: weatherResults.nextmintemp,
                         dayAfterMaxTemp: weatherResults.nextmaxtemp,
-                        dayAfterReport: weatherResults.nextweather,
+                        dayAfterReport: predictForecast(weatherResults.nextweather),
                         sunrise: sunriseTimeString,
                         sunset: sunsetTimeString,
                         src: src
