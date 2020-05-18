@@ -25,7 +25,10 @@ app.get('/', (req, res) => {
 //To store src of image
 var src;
 function storeSourceImage(weatherID) {
-    src = ((int)(Math.floor(weatherID))).toString();
+    if(weatherID==800)
+        src = "clear";
+    else
+        src = Math.floor(weatherID/100).toString();
 }
 
 app.post('/result', (req, res) => {
@@ -65,8 +68,8 @@ app.post('/result', (req, res) => {
                     }
                     ////////////////////////           Date logic ends here         //////////////////////////////
 
-                    console.log(weatherResults.weatherID);
-                    console.log(Math.round(weatherResults.weatherID));
+                    storeSourceImage(weatherResults.weatherID);
+                    
 
                     // Rendering the result page with the following parameters                    
                     res.render('result.ejs', {
@@ -82,7 +85,8 @@ app.post('/result', (req, res) => {
                         dayAfterMaxTemp: weatherResults.nextmaxtemp,
                         dayAfterReport: weatherResults.nextweather,
                         sunrise: sunriseTimeString,
-                        sunset: sunsetTimeString
+                        sunset: sunsetTimeString,
+                        src: src
                     });
                 }
             });

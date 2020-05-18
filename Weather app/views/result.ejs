@@ -7,7 +7,7 @@
     <title>Weather Report</title>
 </head>
 <!-- result , temperature, feelslike, humidity, report -->
-<body style="background-image: url('200.jpg'); background-size: auto;">
+<body style="background-image: url('<%= src %>.jpg'); background-size: auto;">
     <div class="container">
         <div class="header">
             <h1>Weather Report</h1>
@@ -26,11 +26,11 @@
                         <th colspan="2">Today's Report</th>
                     </tr>
                     <tr>
-                        <td>Current Temperature</td>
+                        <td>Current Temperature:</td>
                         <td><%= temperature %>&#8451;</td>
                     </tr>
                     <tr>
-                        <td>Humidity</td>
+                        <td>Humidity:</td>
                         <td><%= humidity %>%</td>
                     </tr>
                     <tr>
@@ -44,11 +44,11 @@
                         <th colspan="2">Tomorrow</th>
                     </tr>
                     <tr>
-                        <td>Min. Temperature</td>
+                        <td>Min. Temperature:</td>
                         <td><%= tomMinTemp %>&#8451;</td>
                     </tr>
                     <tr>
-                        <td>Max. Temperature</td>
+                        <td>Max. Temperature:</td>
                         <td><%= tomMaxTemp %>&#8451;</td>
                     </tr>
                     <tr>
@@ -62,11 +62,11 @@
                         <th colspan="2"><%= dayAfter %></th>
                     </tr>
                     <tr>
-                        <td>Min. Temperature</td>
+                        <td>Min. Temperature:</td>
                         <td><%= dayAfterMinTemp %>&#8451;</td>
                     </tr>
                     <tr>
-                        <td>Max. Temperature</td>
+                        <td>Max. Temperature:</td>
                         <td><%= dayAfterMaxTemp %>&#8451;</td>
                     </tr>
                     <tr>
