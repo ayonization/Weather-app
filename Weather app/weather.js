@@ -16,13 +16,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Providing the public folder for static execution of frontend
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'images')));
 
 app.get('/', (req, res) => {
     res.sendFile(index);
 });
 
-
-
+//To store src of image
+var src;
+function storeSourceImage(weatherID) {
+    src = ((int)(Math.floor(weatherID))).toString();
+}
 
 app.post('/result', (req, res) => {
     var searchQuery = req.body.search;
@@ -49,7 +53,6 @@ app.post('/result', (req, res) => {
                     var currentTime = new Date();
                     var sunriseTimeString, sunsetTimeString;
                     var dayAfter = new Date(currentTime.getTime() + (2*24*60*60*1000)).toLocaleDateString();
-                    console.log(dayAfter);
                     if(currentTime.getTime() > ss.getTime()) {
                         sunriseTimeString = "The sun rose at " + sr.toLocaleTimeString();
                         sunsetTimeString = "The sun set at " + ss.toLocaleTimeString();
@@ -62,6 +65,8 @@ app.post('/result', (req, res) => {
                     }
                     ////////////////////////           Date logic ends here         //////////////////////////////
 
+                    console.log(weatherResults.weatherID);
+                    console.log(Math.round(weatherResults.weatherID));
 
                     // Rendering the result page with the following parameters                    
                     res.render('result.ejs', {

@@ -28,7 +28,8 @@ var getweather=(lat,lng,callback)=>{
             toweather:body.daily[0].weather[0].main,
             nextmaxtemp:body.daily[1].temp.max,
             nextmintemp:body.daily[1].temp.min,
-            nextweather:body.daily[1].weather[0].main
+            nextweather:body.daily[1].weather[0].main,
+            weatherID:body.current.weather[0].id
         });
         }
     
