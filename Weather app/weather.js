@@ -1,39 +1,28 @@
 const geocode = require('./geocode/geocode.js');
 const weatherserver = require('./weatherserver/weatherserver.js');
 
-const yargs = require('yargs');
-
 const express = require('express');
 const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const port = 3000;
 
+//Setting the view engine to ejs to render the same pages
 app.set('view engine', 'ejs');
 
+//To parse the form input parameters
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//Providing the public folder for static execution of frontend
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use(express.static(path.join(__dirname, 'views')));
 
 app.get('/', (req, res) => {
     res.sendFile(index);
 });
 
-// function timeConverter(UNIX_timestamp){
-//     var a = new Date(UNIX_timestamp * 1000);
-//     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-//     var year = a.getFullYear();
-//     var month = months[a.getMonth()];
-//     var date = a.getDate();
-//     var hour = a.getHours();
-//     var min = a.getMinutes();
-//     var sec = a.getSeconds();
-//     var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-//     return time;
-//   }
-//   console.log(timeConverter(0));
+
+
 
 app.post('/result', (req, res) => {
     var searchQuery = req.body.search;
@@ -51,22 +40,45 @@ app.post('/result', (req, res) => {
                                 
                 }
                 else{
-                    var sr = new Date(weatherResults.sunrise).toLocaleTimeString("en-US")
-                    var ss = new Date(weatherResults.sunset).toLocaleTimeString("en-US")
-                    console.log("sunrise is at "+sr);
-                    console.log("sunset is at "+ss);
-                    console.log("current temp  is  "+weatherResults.temp);
-                    console.log("Weather report is  "+weatherResults.weatherdescrip);
-                    console.log("Humidity is "+weatherResults.humidity);
-                    console.log("Tomorrow max temp is "+weatherResults.tomaxtemp);
-                    console.log("Tomorrow min temp is "+weatherResults.tomintemp);
-                    console.log("Tomorrow weather report is "+weatherResults.toweather);
-                    console.log("Day after tomorrow max temp is "+weatherResults.nextmaxtemp);
-                    console.log("Day after tomorrow min temp is "+weatherResults.nextmintemp);
-                    console.log("Day after tomorrow weather report is  "+weatherResults.nextweather);
+                    console.log();
+                    console.log();
 
-                    
-                    res.render('result.ejs', {result: results.fulladdress, temperature: weatherResults.temperature});
+                    /////////// The Date logic to send interactive lines to the user //////////////////
+                    var sr = new Date(weatherResults.sunrise*1000);
+                    var ss = new Date(weatherResults.sunset*1000);
+                    var currentTime = new Date();
+                    var sunriseTimeString, sunsetTimeString;
+                    var dayAfter = new Date(currentTime.getTime() + (2*24*60*60*1000)).toLocaleDateString();
+                    console.log(dayAfter);
+                    if(currentTime.getTime() > ss.getTime()) {
+                        sunriseTimeString = "The sun rose at " + sr.toLocaleTimeString();
+                        sunsetTimeString = "The sun set at " + ss.toLocaleTimeString();
+                    } else if(currentTime.getTime() > sr.getTime() && currentTime.getTime() < ss.getTime()) {
+                        sunriseTimeString = "The sun rose at " + sr.toLocaleTimeString();
+                        sunsetTimeString = "The sun will set at " + ss.toLocaleTimeString();
+                    } else {
+                        sunriseTimeString = "The sun will rise at " + sr.toLocaleTimeString();
+                        sunsetTimeString = "The sun will set at " + ss.toLocaleTimeString();
+                    }
+                    ////////////////////////           Date logic ends here         //////////////////////////////
+
+
+                    // Rendering the result page with the following parameters                    
+                    res.render('result.ejs', {
+                        address: results.fulladdress,
+                        temperature: weatherResults.temp,
+                        humidity: weatherResults.humidity,
+                        todayReport: weatherResults.weatherdescrip, 
+                        tomMinTemp: weatherResults.tomintemp, 
+                        tomMaxTemp: weatherResults.tomaxtemp, 
+                        tomReport: weatherResults.toweather,
+                        dayAfter: dayAfter, 
+                        dayAfterMinTemp: weatherResults.nextmintemp,
+                        dayAfterMaxTemp: weatherResults.nextmaxtemp,
+                        dayAfterReport: weatherResults.nextweather,
+                        sunrise: sunriseTimeString,
+                        sunset: sunsetTimeString
+                    });
                 }
             });
 

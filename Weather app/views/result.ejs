@@ -12,28 +12,65 @@
         <div class="header">
             <h1>Weather Report</h1>
         </div>
+        <div class="addressArea">
+            <p><%= address %></p>
+        </div>
+        <div class="sunField">
+            <p><%= sunrise %></p>
+            <p><%= sunset %></p>
+        </div>
         <div class="result-area">
-            <div>
+            <div class="result-item">
                 <table>
                     <tr>
-                        <td>Place</td>
-                        <td><%= result %></td>
+                        <th colspan="2">Today's Report</th>
                     </tr>
                     <tr>
-                        <td>Temperature</td>
-                        <td><%= temperature %> &#8451;</td>
-                    </tr>
-                    <tr>
-                        <td>Feels Like</td>
-                        <td><%= feelslike %> &#8451;</td>
+                        <td>Current Temperature</td>
+                        <td><%= temperature %>&#8451;</td>
                     </tr>
                     <tr>
                         <td>Humidity</td>
                         <td><%= humidity %>%</td>
                     </tr>
                     <tr>
-                        <td>Weather</td>
-                        <td><%= report %></td>
+                        <td colspan="2" style="font-size: medium;"><%= todayReport %> weather Today</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="result-item">
+                <table>
+                    <tr>
+                        <th colspan="2">Tomorrow</th>
+                    </tr>
+                    <tr>
+                        <td>Min. Temperature</td>
+                        <td><%= tomMinTemp %>&#8451;</td>
+                    </tr>
+                    <tr>
+                        <td>Max. Temperature</td>
+                        <td><%= tomMaxTemp %>&#8451;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-size: medium;"><%= tomReport %> weather Tomorrow</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="result-item">
+                <table>
+                    <tr>
+                        <th colspan="2"><%= dayAfter %></th>
+                    </tr>
+                    <tr>
+                        <td>Min. Temperature</td>
+                        <td><%= dayAfterMinTemp %>&#8451;</td>
+                    </tr>
+                    <tr>
+                        <td>Max. Temperature</td>
+                        <td><%= dayAfterMaxTemp %>&#8451;</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-size: medium;"><%= tomReport %> weather on <%= dayAfter %></td>
                     </tr>
                 </table>
             </div>
